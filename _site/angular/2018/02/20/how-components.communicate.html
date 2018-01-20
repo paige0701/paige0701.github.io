@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+
+    
+
+    <title>How components communicate with each other in Angular.</title>
+
+    
+      <!-- Update your html tag to include the itemscope and itemtype attributes. -->
+<html itemscope itemtype="http://schema.org/Article">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+  <meta name="author" content="Paige Choi">
+
+<meta name="description" content="The most confusing part with angular was interaction among components. This is because I didn’t spend the time to study fundamentals, sending data ba..." />
+
+
+
+
+
+<!-- Schema.org markup for Google+ -->
+<meta itemprop="name" content="How components communicate with each other in Angular.">
+<meta itemprop="description" content="The most confusing part with angular was interaction among components. This is because I didn’t spend the time to study fundamentals, sending data ba...">
+
+  <meta itemprop="image" content="http://localhost:4000/thumbnail-jumbo.png">
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image">
+
+
+
+<meta name="twitter:title" content="How components communicate with each other in Angular.">
+<meta name="twitter:description" content="The most confusing part with angular was interaction among components. This is because I didn’t spend the time to study fundamentals, sending data ba...">
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/thumbnail-jumbo.png">
+  <meta property="twitter:image" content="http://localhost:4000/thumbnail-jumbo.png">
+
+<meta property="twitter:url" content="http://localhost:4000/angular/2018/02/20/how-components.communicate.html">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="How components communicate with each other in Angular." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/angular/2018/02/20/how-components.communicate.html" />
+
+  <meta property="og:image" content="http://localhost:4000/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="The most confusing part with angular was interaction among components. This is because I didn’t spend the time to study fundamentals, sending data ba..." />
+<meta property="og:site_name" content="Tech page" />
+
+  <meta property="article:published_time" content="2018-02-20T00:00:00+09:00" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="angular">
+  
+
+
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/angular/2018/02/20/how-components.communicate.html">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+    <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">Home</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about">About me</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/contact.html">Contact</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+
+    <section class="page-header">
+      <h1 class="project-name">How components communicate with each other in Angular.</h1>
+      <h2 class="project-tagline"></h2>
+      
+      <!-- Post tagline -->
+      
+        <h2 class="project-date">
+        <time datetime="2018-02-20T00:00:00+09:00" itemprop="datePublished">
+          
+          Feb 20, 2018
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Paige Choi</span></span>
+        
+        </h2>
+      
+      <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+      <article itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">How components communicate with each other in Angular.</h1>
+    <p class="post-meta">
+      <time datetime="2018-02-20T00:00:00+09:00" itemprop="datePublished">
+        
+        Feb 20, 2018
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody">
+    <p>The most confusing part with angular was interaction among components.
+This is because I didn’t spend the time to study fundamentals, sending data back and forth was just too confusing.
+In the official Angular document, component interaction is explained in 5 ways.
+First 4 are straightforward but the last one about the service is challenging. 
+I’ll get back to that after studying the service first.</p>
+
+<p>Angular를 처음 사용했을 때 가장 어려웠던 것은 기초를 공부할 시간이 없이 바로 실무로 투입이 되다 보니..
+간단한 컴포넌트를 만들어서 사용하는 것이 너무 어렵고 시간도 오래 걸렸다.
+처음에는 컴포넌트를 왜 만드는지.. 조차 모르고 그냥 막 다 copy and paste 하느라 아주 힘들었던 기억이 난다.
+그래서 지금이라도 기초를 다시 잡으려고 한다. 시간을 내서 doc을 읽어보니 왜 이해가 되는 거같지? 
+도큐먼트에서는 component interaction을 할 수 있는 방법을 5가지를 설명한다.
+여기서 첫 번째 4개는 금방 이해할 수 있었다. 하지만 5번째는 아직 100% 이해하지 못해서 서비스 쪽 개념을 다시 공부하고 마지막 것을 정리해야겠다.</p>
+
+<p><br /></p>
+<hr />
+
+<p><br /></p>
+
+<blockquote>
+  <p>1 . Pass data from parent to child with input binding. 
+<br /> 부모 컴포넌트에서 자식 컴토넌트로 데이터를 보낼때는 input binding을 사용한다.</p>
+</blockquote>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Parent Component</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+        <span class="na">selector</span> <span class="p">:</span> <span class="s1">'app-parent'</span><span class="p">,</span>
+        <span class="cm">/** left side 'hero' is the hero variable from the child component. 
+        right side hero is the value inside this component */</span>
+        <span class="na">template</span> <span class="p">:</span> <span class="s2">`&lt;app-child 
+        [hero]=“hero”       
+        [master]='master'&gt;&lt;/app-child&gt;`</span> 
+        <span class="cm">/** []를 이용해서 자식 컴포넌트로 보낼 데이터 바인딩을 한다. 왼쪽에 있는 master 가 자식클라스에 
+        @Input으로 선언한 변수이다. 오른쪽은 이 컴포넌트에 선언되어 있는 master를 뜻한다. 
+        여기 선언되어 있는 master는 Batman이기 때문에 Batman 값을 자식 컴포넌트에 선언되어
+        있는 master변수가 받는것이다. */</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ParentComponent</span><span class="p">{</span>
+    
+    <span class="kr">public</span> <span class="nx">hero</span><span class="p">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="nx">Superman</span><span class="p">;</span>       <span class="c1">// A variable called hero which has a value of Superman</span>
+    <span class="kr">public</span> <span class="nx">master</span><span class="p">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">'Batman'</span><span class="p">;</span>     <span class="c1">// Master라는 변수를 선언하고 Batman 값을 변수에 넣는다.</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Child Component</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+        <span class="na">selector</span> <span class="p">:</span> <span class="s1">'app-child'</span><span class="p">,</span>
+        <span class="na">template</span> <span class="p">:</span> <span class="s2">`&lt;div&gt;My name is , my best friend is &lt;/div&gt;`</span><span class="p">,</span> 
+        <span class="cm">/** My name is Superman, my best friend is Batman. 
+        부모 클라스에서 input binding으로 hero, master값을 받아 오기 때문에 위에처럼 찍히는 것이다. */</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ChildComponent</span><span class="p">{</span>
+    
+    <span class="cm">/** with this input annotation you are telling angular that you are 
+    getting this value from your parent component. */</span>
+    <span class="p">@</span><span class="nd">Input</span><span class="p">()</span>
+    <span class="kr">public</span> <span class="nx">hero</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+
+    <span class="c1">// @input을 선언하면 부모클라스에서 값을 받아온다는 뜻이다.</span>
+    <span class="p">@</span><span class="nd">Input</span><span class="p">(</span><span class="s1">'master'</span><span class="p">)</span> 
+    <span class="kr">public</span> <span class="nx">masterName</span>  <span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+
+    <span class="kr">public</span> <span class="nx">_name</span><span class="p">:</span> <span class="nx">string</span> <span class="p">;</span>
+
+    <span class="cm">/** input 으로 받아온 값을 가로채서 새로운 값을 주거나 trim 같은 메소드를 사용해서값을 변경할수 있다.
+    Intercept input property changes with a setter */</span>
+    <span class="p">@</span><span class="nd">Input</span><span class="p">()</span> 
+    <span class="kd">set</span> <span class="nx">name</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// if some setting is needed for an input use set</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_name</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span> <span class="o">&amp;&amp;</span> <span class="nx">name</span><span class="p">.</span><span class="nx">trim</span><span class="p">())</span> <span class="o">||</span> <span class="s1">'&lt;no name set&gt;'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+<hr />
+
+<p><br /></p>
+
+<blockquote>
+  <p>2 . Parent listens to child event
+<br /> 부모가 자식한테서 값을 받아올때는 자식에서 뱉는(?) 이벤트를 기다린다</p>
+</blockquote>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//Parent Component</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+        <span class="na">selector</span> <span class="p">:</span> <span class="s1">'app-parent'</span><span class="p">,</span>
+        <span class="cm">/**  Here heroChangeEvent in () is the variable in parent component with @output(). And the changeHeroName() is a method that is called when heroCHangeEvent is emitted. Here $event parameter is used to transfer data.
+        heroChangeEvents는 부모 컴포넌트에서 만든 변수이다. heroChangeEvent.emit()을 하면 여기로 온뒤에 changeHeroName()을 콜하는 것이다. 여기서 파라미터로는 $event를 이용해서 데이터를 넘긴다. */</span>
+        <span class="na">template</span> <span class="p">:</span> <span class="s2">`&lt;app-child (heroChangeEvent)=changeHeroName($event)&gt;&lt;/app-child&gt; 
+                    &lt;div&gt;The hero has changed to &lt;/div&gt;`</span>  
+                    <span class="c1">// The hero has changed to WonderWoman </span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ParentComponent</span><span class="p">{</span>    
+
+    <span class="kr">public</span> <span class="nx">heroName</span><span class="p">:</span> <span class="nx">string</span><span class="p">;</span>
+
+    <span class="cm">/** Child component 에서 emit 을 하면 여기로 연결해놨으니깐 거기서 보낸 name을 받아서 
+    로컬 변수에 넣어서 화면에 보여지는 것이다 */</span>
+    <span class="kr">public</span> <span class="nx">changeHeroName</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>  
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">heroName</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Child Component</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+        <span class="na">selector</span><span class="p">:</span> <span class="s1">'app-child'</span><span class="p">,</span>
+ <span class="c1">// When div is clicked change method is called. Div를 클릭하면 change()메소드를 탄다</span>
+        <span class="na">template</span> <span class="p">:</span> <span class="s2">`&lt;div (click)="change()"&gt;Click to change hero&lt;/div&gt;`</span><span class="p">,</span> 
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ChildComponent</span><span class="p">{</span>
+    
+    <span class="c1">// with output annotation you are making custom event.</span>
+    <span class="p">@</span><span class="nd">Output</span><span class="p">()</span>                                                          
+
+    <span class="c1">// output annotation 으로 선언한 heroChangeEvent를 이용해서 부모 컴포넌트로 이벤트 전파</span>
+    <span class="kr">public</span> <span class="nx">heroChangeEvent</span> <span class="p">:</span> <span class="k">new</span> <span class="nx">EventEmitter</span><span class="p">();</span> 
+
+
+    <span class="cm">/**  heroChangeEvent.emit() 은 Parent Component 에 선언되어있는 (heroChangeEvent)="changeHeroName()" 으로 가서 changeHeroName()를 부르게 되는 것이다
+    
+    heroChangeEvent.emit(and what you want to send to the parent component) calls  (heroChangeEvent)="changeHeroName()" this statement in parent component. 
+    So when you emit changeHeroName method is called. */</span>
+    <span class="kr">public</span> <span class="nx">change</span><span class="p">()</span> <span class="p">{</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nx">heroChangeEvent</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">'Wonderwoman'</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+<hr />
+
+<p><br /></p>
+
+<blockquote>
+  <p>3 . Parent interacts with child with local variable
+<br /> 변수를 선언해서 부모클라스에서 자식 클라스와 interact 한다.</p>
+</blockquote>
+
+<p>By creating a template reference variable for the child element and then reference that variable within the parent template.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Parent Component</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+        <span class="na">selector</span> <span class="p">:</span> <span class="s1">'app-parent'</span><span class="p">,</span>
+        <span class="cm">/** #childComponent is naming a local variable to the child Component. 
+        Now with childComponent variable, parent component can get access to
+        child components variables and methods.
+        # 뒤에 오는 단어는 childComponent를 새로운 변수에 담는 것이다. 그래서 #childComponent라고 지었으면 childComponent.minute로  . 을 이용해서 자식 컴포넌트에 접근할 수 있다 */</span>
+        <span class="na">template</span> <span class="p">:</span> <span class="s2">`&lt;app-child #childComponent &gt;&lt;/app-child&gt; 
+                    &lt;div&gt; &lt;/div&gt;`</span>  
+                    <span class="c1">// Wednesday 50</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ParentComponent</span><span class="p">{</span>   
+
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Child Component</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+        <span class="na">selector</span><span class="p">:</span> <span class="s1">'app-child'</span><span class="p">,</span>
+        <span class="na">template</span> <span class="p">:</span> <span class="s2">``</span><span class="p">,</span> 
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ChildComponent</span><span class="p">{</span>
+    
+    <span class="kr">public</span> <span class="nx">minute</span> <span class="p">:</span> <span class="nx">number</span>  <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kr">public</span> <span class="nx">second</span> <span class="p">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span>
+    <span class="kr">public</span> <span class="nx">hour</span> <span class="p">:</span> <span class="nx">number</span>  <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+
+    <span class="kr">public</span> <span class="nx">getCurrentDay</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">return</span> <span class="s1">'Wednesday'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+<hr />
+
+<p><br /></p>
+
+<blockquote>
+  <p>4 . Parent calls a viewChild()
+<br /> ViewChild()를 이용해서 자식 컴포넌트에 접근한다.</p>
+</blockquote>
+
+<p>The local variable approach is easy but it is only limited to the parent template. The parent component itself has no access to the child.
+Inject the child component into the parent as a ViewChild when you need to read and write child component values or must call child component methods.</p>
+
+<p>3번 같은 경우에 컴포넌트를 변수에 담아서 사용하면 쉽고 간단하지만 template안에서만 가능하기 때문에 사용성에 한계가 있다.
+Component에 자식 컴포넌트를 주입해서 사용하는 방법이 viewChild()방법이다</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">@</span><span class="nd">ViewChild</span><span class="p">(</span><span class="nx">ChildComponent</span><span class="p">)</span>
+<span class="kr">private</span> <span class="nx">childComponent</span> <span class="p">:</span> <span class="nx">ChildComponent</span><span class="p">;</span> 
+
+<span class="kr">public</span> <span class="nx">numberOfSeconds</span><span class="p">:</span> <span class="nx">number</span><span class="p">;</span>
+
+<span class="nx">ngAfterViewInit</span><span class="p">()</span> <span class="p">{</span>
+ 
+    <span class="c1">// 3번이랑 비슷하게 위에 this.childComponent 를 이용해서 . 을 통해 child component에 접근할수 있다.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">numberOfSeconds</span> <span class="o">=</span> <span class="nx">childComponent</span><span class="p">.</span><span class="nx">seconds</span><span class="p">;</span> 
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+<hr />
+
+<p><br /></p>
+
+<blockquote>
+  <p>5 . Parent and children communicate via service
+<br /> 부모, 자식 컴포넌트는 서비스를 이용해서 서로에서접근한다.</p>
+</blockquote>
+
+<p>Parent and children share a service whose interface enables bi-directional communication within the family.
+The scope of the service instance is the parent component and its children. Components outside this component subtree have no access to the service or their communications.</p>
+
+<p>–&gt; 여기는 조금 후에 정리 예정</p>
+
+
+  </div>
+
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- SVG icons from https://iconmonstr.com -->
+
+        <!-- Github icon -->
+        <span class="my-span-icon">
+          <a href="" aria-label="'s GitHub" title="'s GitHub">
+            <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+        </span>
+
+        <!-- Twitter icon -->
+        <!-- <span class="my-span-icon">
+          <a href="https://twitter.com/" aria-label="'s Twitter" title="'s Twitter">
+            <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/></svg>
+          </a>
+        </span>
+ -->
+        <!-- RSS icon -->
+        
+        <!-- Contact icon -->
+        
+        
+          <span class="my-span-icon">
+            <a href="/about" aria-label="Contact" title="Contact ">
+              <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"/></svg>
+            </a>
+          </span>
+        
+
+      </footer>
+    </section>
+
+    
+  </body>
+</html>
