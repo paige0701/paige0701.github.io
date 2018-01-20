@@ -9,7 +9,7 @@ I'm <i>Paige Choi</i>.<br />
 Based in Seoul, Korea.<br /> 
 I'm a native Korean, fluent in English, learning Spanish <br />
 
-I enjoy javscript, typescript with Angualar, python with django.<br /> 
+I enjoy javscript, Angular with typescript & python with django.<br /> 
 I'm interested in node, mongo and maybe java ?<br /> 
 
 Besides developing, my passion is coffee and spanish.
