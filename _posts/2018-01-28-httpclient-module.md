@@ -57,11 +57,10 @@ export class abstractService() {
   constructor(private httpClientModule : HttpClientModule, private http : httpModule) {
 
   }
-  
 
   // http 
   protected get() {
-    this.http.get('http://localhost:4200/assets/cafeLists.json')
+    this.http.get(url)
       .map((response: Response) => response.json())
       .subscribe((data) => {
         console.log(data);
@@ -91,10 +90,8 @@ export class abstractService() {
 ```
 
 
-```json
-
 // cafeLists.json
-
+```json
 [
   {"Name":"Epic Espresso the Coffee Bar", "Country" : "Korea", "Address": "Sang wangsimri"},
   {"Name":"Conan Coffee", "Country" : "Korea", "Address": "Wangsimri"},
